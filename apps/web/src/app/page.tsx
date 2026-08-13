@@ -125,6 +125,39 @@ const column3Products = [
   },
 ];
 
+const mockArticles = [
+  {
+    id: '1',
+    title: 'Обзор JBL Club Pro+',
+    image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&auto=format&fit=crop&q=60',
+    link: '/blog/jbl-club-pro-review',
+  },
+  {
+    id: '2',
+    title: 'Обзор посуды WMF FUSIONTEC',
+    image: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=500&auto=format&fit=crop&q=60',
+    link: '/blog/wmf-fusiontec-review',
+  },
+  {
+    id: '3',
+    title: 'Игрушка для взрослых? Гид по выбору электросамоката',
+    image: 'https://images.unsplash.com/photo-1597072689227-8882273e8f6a?w=500&auto=format&fit=crop&q=60',
+    link: '/blog/electric-scooter-guide',
+  },
+  {
+    id: '4',
+    title: 'Windows 10 станет возможным запускать на Apple M1 Mac',
+    image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&auto=format&fit=crop&q=60',
+    link: '/blog/windows-on-m1-mac',
+  },
+  {
+    id: '5',
+    title: 'Apple iPhone 12 выходит в фиолетовом цвете',
+    image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500&auto=format&fit=crop&q=60',
+    link: '/blog/iphone-purple-launch',
+  },
+];
+
 export default function HomePage() {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
@@ -145,8 +178,8 @@ export default function HomePage() {
   };
 
   return (
-    <div className="max-w-[1390px] mx-auto px-4 py-6 space-y-10 relative">
-      {/* 1. Quick Deals Ticker Bar (Top Bar matching reference screenshot) */}
+    <div className="max-w-[1390px] mx-auto px-4 py-6 space-y-12 relative">
+      {/* 1. Quick Deals Ticker Bar */}
       <section className="bg-white border border-elevated rounded-lg p-3 flex items-center justify-between gap-4 overflow-x-auto">
         <div className="flex items-center space-x-6 min-w-max">
           <span className="font-bold text-textMain text-base">От 11 990 ₸</span>
@@ -274,11 +307,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3. Promo Banners Grid ("Акции" section matching reference screenshot) */}
+      {/* 3. Promo Banners Grid ("Акции" section) */}
       <section className="space-y-4">
         <h2 className="text-xl font-bold text-textMain">Акции</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Card 1: Pink/Rose */}
           <Link
             href="/catalog/beauty"
             className="bg-gradient-to-r from-pink-300 to-rose-200 rounded-lg p-6 flex items-center justify-between h-56 hover:shadow-subtle transition-all duration-150 group overflow-hidden relative"
@@ -297,7 +329,6 @@ export default function HomePage() {
             </div>
           </Link>
 
-          {/* Card 2: Purple/Indigo */}
           <Link
             href="/catalog/discounts"
             className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-6 flex items-center justify-between h-56 hover:shadow-subtle transition-all duration-150 group overflow-hidden relative"
@@ -316,7 +347,6 @@ export default function HomePage() {
             </div>
           </Link>
 
-          {/* Card 3: Orange/Amber */}
           <Link
             href="/catalog/audio"
             className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-lg p-6 flex items-center justify-between h-56 hover:shadow-subtle transition-all duration-150 group overflow-hidden relative"
@@ -358,9 +388,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. Multi-Column Category Product Lists (Middle section matching reference screenshot) */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-4">
-        {/* Column 1 */}
+      {/* 5. Multi-Column Category Product Lists */}
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="space-y-4">
           <h2 className="text-lg font-bold text-textMain border-b border-elevated pb-2">
             Смартфоны и планшеты
@@ -395,7 +424,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Column 2 */}
         <div className="space-y-4">
           <h2 className="text-lg font-bold text-textMain border-b border-elevated pb-2">
             Ноутбуки, планшеты и компьютеры
@@ -430,7 +458,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Column 3 */}
         <div className="space-y-4">
           <h2 className="text-lg font-bold text-textMain border-b border-elevated pb-2">
             Смартфоны и планшеты
@@ -463,6 +490,32 @@ export default function HomePage() {
               </Link>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* 6. Blog / Articles Grid (Matching reference screenshot bottom section) */}
+      <section className="space-y-4 pt-6 border-t border-elevated">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          {mockArticles.map((article) => (
+            <Link
+              key={article.id}
+              href={article.link}
+              className="bg-white border border-elevated rounded-lg overflow-hidden hover:shadow-subtle transition-all duration-150 group flex flex-col justify-between"
+            >
+              <div className="w-full h-36 bg-surface overflow-hidden">
+                <img
+                  src={article.image}
+                  alt={article.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-150"
+                />
+              </div>
+              <div className="p-3">
+                <h4 className="font-semibold text-textMain text-xs line-clamp-3 group-hover:text-brand-500 transition-colors leading-snug">
+                  {article.title}
+                </h4>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 
