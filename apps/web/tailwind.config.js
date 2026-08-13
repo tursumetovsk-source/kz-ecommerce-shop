@@ -9,16 +9,32 @@ module.exports = {
     extend: {
       colors: {
         brand: {
-          50: '#fff7ed',
-          100: '#ffedd5',
-          500: '#f97316',
-          600: '#ea580c',
-          700: '#c2410c',
+          50: '#f3f9eb',
+          100: '#e4f3d2',
+          500: '#76BC21',
+          600: '#67a71b',
+          700: '#528614',
         },
-        navy: {
-          800: '#1e293b',
-          900: '#0f172a',
-        }
+        slateAccent: {
+          500: '#405469',
+          600: '#344557',
+        },
+        surface: '#F7F7F7',
+        elevated: '#EDEDED',
+        textMain: '#333333',
+        textMuted: '#999999',
+      },
+      fontFamily: {
+        sans: ['Jost', 'system-ui', 'sans-serif'],
+      },
+      borderRadius: {
+        DEFAULT: '8px',
+        lg: '8px',
+        xl: '8px',
+        '2xl': '8px',
+      },
+      boxShadow: {
+        subtle: 'rgba(0, 0, 0, 0.08) 0px 10px 20px -10px',
       },
     },
   },
