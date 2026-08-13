@@ -1,184 +1,252 @@
 'use client';
 
 import React, { useState } from 'react';
-import { CreditCard, Truck, MapPin, CheckCircle, ShieldCheck } from 'lucide-react';
+import Link from 'next/link';
 
 export default function CheckoutPage() {
-  const [deliveryMethod, setDeliveryMethod] = useState<'COURIER' | 'PICKUP'>('COURIER');
-  const [paymentMethod, setPaymentMethod] = useState<'HALYK' | 'FREEDOMPAY'>('HALYK');
+  const [deliveryMethod, setDeliveryMethod] = useState<'PICKUP' | 'COURIER_PREPAID' | 'COURIER_COD'>('PICKUP');
+  const [paymentMethod, setPaymentMethod] = useState<'HALYK' | 'CASH'>('HALYK');
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-slate-900 mb-6">Оформление заказа</h1>
+    <div className="max-w-[1422px] mx-auto px-4 py-8">
+      {/* Page Title & Login Link */}
+      <div className="mb-6 space-y-2">
+        <h1 className="text-2xl font-medium text-textMain font-sans">
+          Оформление заказа
+        </h1>
+        <Link href="/login" className="text-brand-500 hover:underline text-sm font-normal inline-block">
+          Уже покупали у нас?
+        </Link>
+      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Form Column */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* Step 1: Contacts */}
-          <div className="bg-white p-6 rounded-xl border border-gray-200 space-y-4">
-            <h2 className="font-bold text-slate-900 text-lg flex items-center space-x-2">
-              <span className="w-6 h-6 bg-brand-600 text-white rounded-full text-xs flex items-center justify-center font-bold">1</span>
-              <span>Контактные данные</span>
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        {/* Left Column: Form Steps */}
+        <div className="lg:col-span-7 space-y-8">
+          {/* Contact Details */}
+          <div className="space-y-4">
+            <h2 className="text-base font-semibold text-textMain">Контактные данные</h2>
+
+            <div className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">ФИО *</label>
+                <label className="block text-xs font-semibold text-textMain mb-1">
+                  Контактное лицо (ФИО) <span className="text-red-500">*</span>
+                </label>
                 <input
                   type="text"
-                  placeholder="Иван Иванов"
+                  placeholder="Иванов Иван Иванович"
                   defaultValue="Алихан Нурланов"
-                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-brand-500"
+                  className="w-full px-3 py-2 bg-white border border-elevated rounded-lg text-sm text-textMain focus:outline-none focus:border-brand-500 transition-colors"
                 />
               </div>
+
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Номер телефона *</label>
+                <label className="block text-xs font-semibold text-textMain mb-1">
+                  Контактный телефон <span className="text-red-500">*</span>
+                </label>
                 <input
                   type="tel"
                   placeholder="+7 (777) 000-00-00"
                   defaultValue="+7 (777) 123-45-67"
-                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-brand-500"
-                />
-              </div>
-              <div className="sm:col-span-2">
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Email (для фискального чека)</label>
-                <input
-                  type="email"
-                  placeholder="name@domain.kz"
-                  defaultValue="alikhan@example.kz"
-                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-brand-500"
+                  className="w-full px-3 py-2 bg-white border border-elevated rounded-lg text-sm text-textMain focus:outline-none focus:border-brand-500 transition-colors"
                 />
               </div>
             </div>
           </div>
 
-          {/* Step 2: Delivery */}
-          <div className="bg-white p-6 rounded-xl border border-gray-200 space-y-4">
-            <h2 className="font-bold text-slate-900 text-lg flex items-center space-x-2">
-              <span className="w-6 h-6 bg-brand-600 text-white rounded-full text-xs flex items-center justify-center font-bold">2</span>
-              <span>Способ доставки</span>
-            </h2>
-            <div className="grid grid-cols-2 gap-4">
-              <button
-                type="button"
-                onClick={() => setDeliveryMethod('COURIER')}
-                className={`p-4 rounded-xl border-2 text-left flex flex-col justify-between transition-all ${
-                  deliveryMethod === 'COURIER' ? 'border-brand-600 bg-orange-50/50' : 'border-gray-200 hover:border-gray-300'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <Truck className="w-5 h-5 text-brand-600" />
-                  {deliveryMethod === 'COURIER' && <CheckCircle className="w-5 h-5 text-brand-600" />}
-                </div>
-                <span className="font-semibold text-slate-900 text-sm">Курьерская доставка</span>
-                <span className="text-xs text-gray-500 mt-1">До двери (1-2 дня)</span>
-              </button>
+          {/* Delivery Options */}
+          <div className="space-y-4 pt-4 border-t border-elevated">
+            <h2 className="text-base font-semibold text-textMain">Доставка</h2>
 
-              <button
-                type="button"
+            <div>
+              <label className="block text-xs font-semibold text-textMain mb-1">
+                Населенный пункт <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                defaultValue="г Алматы"
+                className="w-full px-3 py-2 bg-white border border-elevated rounded-lg text-sm text-textMain focus:outline-none focus:border-brand-500 transition-colors"
+              />
+            </div>
+
+            {/* Radio Delivery Options matching reference screenshot */}
+            <div className="space-y-3 pt-2">
+              {/* Option 1: Pickup */}
+              <label
                 onClick={() => setDeliveryMethod('PICKUP')}
-                className={`p-4 rounded-xl border-2 text-left flex flex-col justify-between transition-all ${
-                  deliveryMethod === 'PICKUP' ? 'border-brand-600 bg-orange-50/50' : 'border-gray-200 hover:border-gray-300'
-                }`}
+                className="flex items-start justify-between cursor-pointer group py-1"
               >
-                <div className="flex items-center justify-between mb-2">
-                  <MapPin className="w-5 h-5 text-brand-600" />
-                  {deliveryMethod === 'PICKUP' && <CheckCircle className="w-5 h-5 text-brand-600" />}
+                <div className="flex items-start space-x-3">
+                  <div className={`w-4 h-4 rounded-full border flex items-center justify-center mt-1 transition-colors ${
+                    deliveryMethod === 'PICKUP' ? 'border-brand-500 bg-white' : 'border-gray-400'
+                  }`}>
+                    {deliveryMethod === 'PICKUP' && (
+                      <div className="w-2 h-2 rounded-full bg-brand-500" />
+                    )}
+                  </div>
+                  <div>
+                    <span className="font-semibold text-textMain text-base block">Самовывоз</span>
+                    <span className="text-xs text-textMuted block mt-0.5">На пункте выдачи</span>
+                  </div>
                 </div>
-                <span className="font-semibold text-slate-900 text-sm">Самовывоз</span>
-                <span className="text-xs text-gray-500 mt-1">Пункт выдачи Алматы</span>
-              </button>
-            </div>
+                <span className="font-bold text-textMain text-sm">+ 0 ₸</span>
+              </label>
 
-            {deliveryMethod === 'COURIER' && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Город *</label>
-                  <input
-                    type="text"
-                    defaultValue="Алматы"
-                    className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-brand-500"
-                  />
+              {/* Option 2: Courier Prepaid */}
+              <label
+                onClick={() => setDeliveryMethod('COURIER_PREPAID')}
+                className="flex items-start justify-between cursor-pointer group py-1"
+              >
+                <div className="flex items-start space-x-3">
+                  <div className={`w-4 h-4 rounded-full border flex items-center justify-center mt-1 transition-colors ${
+                    deliveryMethod === 'COURIER_PREPAID' ? 'border-brand-500 bg-white' : 'border-gray-400'
+                  }`}>
+                    {deliveryMethod === 'COURIER_PREPAID' && (
+                      <div className="w-2 h-2 rounded-full bg-brand-500" />
+                    )}
+                  </div>
+                  <div>
+                    <span className="font-semibold text-textMain text-base block">Курьерская доставка (предоплата)</span>
+                    <span className="text-xs text-textMuted block mt-0.5">До двери в течение 1-2 дней</span>
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Улица, дом, квартира *</label>
-                  <input
-                    type="text"
-                    placeholder="пр. Абая 150, кв. 42"
-                    className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-brand-500"
-                  />
+                <span className="font-bold text-textMain text-sm">+ 1 500 ₸</span>
+              </label>
+
+              {/* Option 3: Courier COD */}
+              <label
+                onClick={() => setDeliveryMethod('COURIER_COD')}
+                className="flex items-start justify-between cursor-pointer group py-1"
+              >
+                <div className="flex items-start space-x-3">
+                  <div className={`w-4 h-4 rounded-full border flex items-center justify-center mt-1 transition-colors ${
+                    deliveryMethod === 'COURIER_COD' ? 'border-brand-500 bg-white' : 'border-gray-400'
+                  }`}>
+                    {deliveryMethod === 'COURIER_COD' && (
+                      <div className="w-2 h-2 rounded-full bg-brand-500" />
+                    )}
+                  </div>
+                  <div>
+                    <span className="font-semibold text-textMain text-base block">Курьерская доставка (оплата при получении)</span>
+                    <span className="text-xs text-textMuted block mt-0.5">Наличными или картой курьеру</span>
+                  </div>
                 </div>
-              </div>
-            )}
+                <span className="font-bold text-textMain text-sm">+ 2 000 ₸</span>
+              </label>
+            </div>
           </div>
 
-          {/* Step 3: Payment Provider */}
-          <div className="bg-white p-6 rounded-xl border border-gray-200 space-y-4">
-            <h2 className="font-bold text-slate-900 text-lg flex items-center space-x-2">
-              <span className="w-6 h-6 bg-brand-600 text-white rounded-full text-xs flex items-center justify-center font-bold">3</span>
-              <span>Способ онлайн-оплаты</span>
+          {/* Payment Method */}
+          <div className="space-y-4 pt-4 border-t border-elevated">
+            <h2 className="text-base font-semibold text-textMain">
+              Способ оплаты <span className="text-red-500">*</span>
             </h2>
-            <div className="grid grid-cols-2 gap-4">
-              <button
-                type="button"
-                onClick={() => setPaymentMethod('HALYK')}
-                className={`p-4 rounded-xl border-2 text-left flex flex-col justify-between transition-all ${
-                  paymentMethod === 'HALYK' ? 'border-brand-600 bg-orange-50/50' : 'border-gray-200 hover:border-gray-300'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-extrabold text-emerald-700 text-base">Halyk ePay</span>
-                  {paymentMethod === 'HALYK' && <CheckCircle className="w-5 h-5 text-brand-600" />}
-                </div>
-                <span className="text-xs text-gray-500">Оплата картой Visa / MasterCard / Apple Pay</span>
-              </button>
 
-              <button
-                type="button"
-                onClick={() => setPaymentMethod('FREEDOMPAY')}
-                className={`p-4 rounded-xl border-2 text-left flex flex-col justify-between transition-all ${
-                  paymentMethod === 'FREEDOMPAY' ? 'border-brand-600 bg-orange-50/50' : 'border-gray-200 hover:border-gray-300'
-                }`}
+            <div className="space-y-4">
+              {/* Halyk ePay Option */}
+              <label
+                onClick={() => setPaymentMethod('HALYK')}
+                className="flex items-start space-x-3 cursor-pointer group"
               >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-extrabold text-emerald-600 text-base">Freedom Pay</span>
-                  {paymentMethod === 'FREEDOMPAY' && <CheckCircle className="w-5 h-5 text-brand-600" />}
+                <div className={`w-4 h-4 rounded-full border flex items-center justify-center mt-1 transition-colors ${
+                  paymentMethod === 'HALYK' ? 'border-brand-500 bg-white' : 'border-gray-400'
+                }`}>
+                  {paymentMethod === 'HALYK' && (
+                    <div className="w-2 h-2 rounded-full bg-brand-500" />
+                  )}
                 </div>
-                <span className="text-xs text-gray-500">Freedom Bank & Карты любого банка</span>
-              </button>
+                <div>
+                  <span className="font-semibold text-textMain text-base block">Halyk ePay / Freedom Pay</span>
+                  <span className="text-xs text-textMuted block mt-0.5">
+                    Банковской картой, кошельком, через Apple Pay и другими способами
+                  </span>
+                </div>
+              </label>
+
+              {/* Cash Option */}
+              <label
+                onClick={() => setPaymentMethod('CASH')}
+                className="flex items-start space-x-3 cursor-pointer group"
+              >
+                <div className={`w-4 h-4 rounded-full border flex items-center justify-center mt-1 transition-colors ${
+                  paymentMethod === 'CASH' ? 'border-brand-500 bg-white' : 'border-gray-400'
+                }`}>
+                  {paymentMethod === 'CASH' && (
+                    <div className="w-2 h-2 rounded-full bg-brand-500" />
+                  )}
+                </div>
+                <div>
+                  <span className="font-semibold text-textMain text-base block">Наличными курьеру</span>
+                  <span className="text-xs text-textMuted block mt-0.5">Наличными курьеру при получении</span>
+                </div>
+              </label>
             </div>
+          </div>
+
+          {/* Big Green Confirm Order Button (#76BC21) matching reference screenshot */}
+          <div className="pt-6 border-t border-elevated">
+            <button className="w-full bg-brand-500 hover:bg-brand-600 text-white font-medium py-3.5 px-6 rounded-lg transition-colors shadow-sm text-base text-center block">
+              Подтвердить заказ
+            </button>
           </div>
         </div>
 
-        {/* Order Review Sidebar */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6 h-fit space-y-6">
-          <h2 className="font-bold text-slate-900 text-lg border-b border-gray-200 pb-3">Ваш заказ</h2>
+        {/* Right Column: Order Items & Summary Side Panel */}
+        <div className="lg:col-span-5 bg-white border border-elevated rounded-lg p-6 space-y-6">
+          {/* Items List */}
+          <div className="space-y-4 divide-y divide-elevated">
+            <div className="flex items-start justify-between gap-4 pb-4">
+              <div className="flex items-start space-x-3">
+                <img
+                  src="https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=150&auto=format&fit=crop&q=60"
+                  alt="Samsung Galaxy S21 256GB"
+                  className="w-12 h-16 object-contain shrink-0"
+                />
+                <div>
+                  <h4 className="text-xs font-semibold text-textMain leading-snug">
+                    Смартфон Samsung Galaxy S21 256GB (SM-G991B) (256GB)
+                  </h4>
+                </div>
+              </div>
+              <span className="text-xs font-bold text-textMain shrink-0">
+                2 x 72 990 ₸
+              </span>
+            </div>
 
-          <div className="space-y-3">
-            <div className="flex items-center justify-between text-xs text-slate-700">
-              <span>iPhone 17 Pro 256GB</span>
-              <span className="font-bold">699 990 ₸</span>
+            <div className="flex items-start justify-between gap-4 pt-4">
+              <div className="flex items-start space-x-3">
+                <img
+                  src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=150&auto=format&fit=crop&q=60"
+                  alt="Samsung Galaxy S21 128GB"
+                  className="w-12 h-16 object-contain shrink-0"
+                />
+                <div>
+                  <h4 className="text-xs font-semibold text-textMain leading-snug">
+                    Смартфон Samsung Galaxy S21 128GB (SM-G991B) (128GB)
+                  </h4>
+                </div>
+              </div>
+              <span className="text-xs font-bold text-textMain shrink-0">
+                2 x 67 990 ₸
+              </span>
             </div>
           </div>
 
-          <div className="space-y-2 border-t border-gray-200 pt-3 text-xs text-slate-600">
+          {/* Totals Breakdown */}
+          <div className="space-y-2 pt-4 border-t border-elevated text-xs text-textMain">
             <div className="flex justify-between">
-              <span>Сумма товаров</span>
-              <span>699 990 ₸</span>
+              <span className="text-textMuted">Сумма по товарам</span>
+              <span className="font-bold text-textMain text-sm">281 960 ₸</span>
             </div>
             <div className="flex justify-between">
-              <span>Доставка</span>
-              <span className="text-emerald-600 font-semibold">0 ₸</span>
+              <span className="text-textMuted">Стоимость доставки</span>
+              <span className="font-bold text-textMain text-sm">0 ₸</span>
             </div>
-            <div className="border-t border-gray-200 pt-3 flex justify-between text-base font-extrabold text-slate-900">
-              <span>К оплате:</span>
-              <span className="text-brand-600">699 990 ₸</span>
+
+            <div className="pt-4 flex justify-between items-baseline border-t border-elevated text-base font-bold">
+              <span className="text-textMain">Итого:</span>
+              <span className="text-2xl font-bold text-textMain">281 960 ₸</span>
             </div>
           </div>
-
-          <button className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center space-x-2 transition-colors shadow-md">
-            <CreditCard className="w-5 h-5 text-amber-400" />
-            <span>Перейти к оплате через банк</span>
-          </button>
         </div>
       </div>
     </div>
